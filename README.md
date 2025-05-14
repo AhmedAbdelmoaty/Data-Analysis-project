@@ -19,59 +19,46 @@ The dashboard provides insights into:
 The data used in this report is based on **Microsoft's sample database**:  
 `AdventureWorksDW2022` (filtered from 2022 to 2024 only).
 
-The following SQL views were created to simplify and organize the model:
+Only the following views were used:
 
-### 🔧 Custom SQL Views:
+- `CalendarView`
+- `CustomersView`
+- `ProductsView`
+- `SalesView`
 
-```sql
--- 1. CalendarView
-CREATE VIEW CalendarView AS
-SELECT 
-    DateKey,
-    FullDateAlternateKey AS Date,
-    EnglishDayNameOfWeek AS Day,
-    EnglishMonthName AS Month,
-    MonthNumberOfYear AS MonthNum,
-    CalendarQuarter AS QTR,
-    CalendarYear AS Year
-FROM DimDate
-WHERE CalendarYear BETWEEN 2022 AND 2024;
+> You can find all SQL views here: [`/SQL`](./SQL)
 
--- 2. CustomersView
-CREATE VIEW CustomersView AS
-SELECT 
-    c.CustomerKey,
-    c.FirstName,
-    c.LastName,
-    c.FirstName + ' ' + c.LastName AS FullName,
-    c.Gender,
-    g.City,
-    g.EnglishCountryRegionName AS Country
-FROM DimCustomer c
-JOIN DimGeography g ON c.GeographyKey = g.GeographyKey;
+---
 
--- 3. ProductsView
-CREATE VIEW ProductsView AS
-SELECT 
-    p.ProductKey,
-    p.ProductAlternateKey AS ItemCode,
-    p.EnglishProductName AS ProductName,
-    p.Color,
-    ISNULL(p.ProductLine, 'NA') AS ProductLine,
-    ISNULL(s.EnglishProductSubcategoryName, 'Unknown') AS SubCategoryName,
-    ISNULL(cat.EnglishProductCategoryName, 'Unknown') AS CategoryName
-FROM DimProduct p
-LEFT JOIN DimProductSubcategory s ON p.ProductSubcategoryKey = s.ProductSubcategoryKey
-LEFT JOIN DimProductCategory cat ON s.ProductCategoryKey = cat.ProductCategoryKey;
+## 📁 Folder Structure
 
--- 4. SalesView
-CREATE VIEW SalesView AS
-SELECT 
-    ProductKey,
-    OrderDateKey,
-    CustomerKey,
-    SalesOrderNumber,
-    SalesAmount,
-    TotalProductCost
-FROM FactInternetSales
-WHERE OrderDateKey BETWEEN 20220101 AND 20241231;
+- [`SalesDashboard.pbix`](./SalesDashboard.pbix) → Main Power BI report  
+- [`/SQL`](./SQL) → Contains all SQL views used for building the data model  
+- [`/Images`](./Images) → Dashboard & data model screenshots  
+- [`README.md`](./README.md) → This file
+
+---
+
+## 🧱 Data Model
+
+The model includes:
+- Relationships between Products, Customers,Calendar, and Sales
+- Cleaned and transformed views for optimized reporting
+- Measure table
+
+📷 _See [`/Images/DataModel.png`](./Images/DataModel.png)_
+
+---
+
+## 🖼 Dashboard Preview
+
+📷 _See [`/Images/Dashboard.png`](./Images/Dashboard.png)_
+
+---
+
+## 👨‍💻 Author
+
+- **Ahmed Abdelmoaty**
+- 💼 [LinkedIn](https://www.linkedin.com/in/ahmed-abdelmoaty-2b6860357)
+- 📧 aabdelmoaty133@email.com
+
