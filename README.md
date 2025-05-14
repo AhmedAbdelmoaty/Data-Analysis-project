@@ -52,7 +52,8 @@ The model includes:
 
 ## 🖼 Dashboard Preview
 
-📷 _See [`/Images/Dashboard.png`](./Images/Dashboard.png)_
+📷 _See [`/Images/Overview.png`](./Images/Overview.png)_
+📷 _See [`/Images/ProductDetails.png`](./Images/ProductDetails.png)_
 
 ---
 
